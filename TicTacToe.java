@@ -4,8 +4,9 @@ public class TicTacToe {
 
     public static final Scanner consoleInput = new Scanner(System.in);
 
-    public static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
-    public static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
+    public static ArrayList<Integer> playerPositions = new ArrayList<>();
+    public static ArrayList<Integer> computerPositions = new ArrayList<>();
+    public static String result = "";
 
 
     public static void main(String[] args) {
@@ -19,24 +20,43 @@ public class TicTacToe {
 
         printGameBoard(gameBoard);
 
-        while (true) {
+        while(true) {
 
 
             System.out.println("Enter where you would like to play (1-9)");
             int playerPosition = consoleInput.nextInt();
+            while(playerPositions.contains(playerPosition) || computerPositions.contains(playerPosition)) {
+                System.out.println("This position has been taken");
+                playerPosition = consoleInput.nextInt();
+            }
+
+
 
             placeSymbol(gameBoard, playerPosition, "Player");
+            result = checkWinner();
+            if(result.length() > 0){
+                System.out.println(result);
+                break;
+            }
+
 
 
             Random randomPosition = new Random();
             int computerPosition = randomPosition.nextInt(9) + 1;
+            while(playerPositions.contains(computerPosition) || computerPositions.contains(computerPosition)) {
+                computerPosition = randomPosition.nextInt(9 + 1 );
+            }
+
             placeSymbol(gameBoard, computerPosition, "CPU");
 
             printGameBoard(gameBoard);
+            result = checkWinner();
 
-            String result = checkWinner();
+            if(result.length() > 0){
+                System.out.println(result);
+                break;
+            }
 
-            System.out.println(result);
         }
 
     }
@@ -82,21 +102,21 @@ public class TicTacToe {
 
     public static String checkWinner(){
 
-        List topRow = Arrays.asList(1, 2, 3);
-        List middleRow = Arrays.asList(4, 5, 6);
-        List bottomeRow = Arrays.asList(7, 8, 9);
+        List<Integer> topRow = Arrays.asList(1, 2, 3);
+        List<Integer> middleRow = Arrays.asList(4, 5, 6);
+        List<Integer> bottomRow = Arrays.asList(7, 8, 9);
 
-        List leftColumn = Arrays.asList(1, 4, 7);
-        List middleColumn = Arrays.asList(2, 5, 8);
-        List rightColumn = Arrays.asList(3, 6, 9);
+        List<Integer> leftColumn = Arrays.asList(1, 4, 7);
+        List<Integer> middleColumn = Arrays.asList(2, 5, 8);
+        List<Integer> rightColumn = Arrays.asList(3, 6, 9);
 
-        List leftToRightCross = Arrays.asList(1, 5, 9);
-        List rightToLeftCross = Arrays.asList(7, 5, 3);
+        List<Integer> leftToRightCross = Arrays.asList(1, 5, 9);
+        List<Integer> rightToLeftCross = Arrays.asList(7, 5, 3);
 
-        List<List> winningConditions = new ArrayList<List>();
+        ArrayList<List> winningConditions = new ArrayList<>();
         winningConditions.add(topRow);
         winningConditions.add(middleRow);
-        winningConditions.add(bottomeRow);
+        winningConditions.add(bottomRow);
         winningConditions.add(leftColumn);
         winningConditions.add(middleColumn);
         winningConditions.add(rightColumn);
