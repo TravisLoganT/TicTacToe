@@ -1,9 +1,11 @@
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class TicTacToe {
 
     public static final Scanner consoleInput = new Scanner(System.in);
+
+    public static ArrayList<Integer> playerPositions = new ArrayList<Integer>();
+    public static ArrayList<Integer> computerPositions = new ArrayList<Integer>();
 
 
     public static void main(String[] args) {
@@ -31,6 +33,10 @@ public class TicTacToe {
             placeSymbol(gameBoard, computerPosition, "CPU");
 
             printGameBoard(gameBoard);
+
+            String result = checkWinner();
+
+            System.out.println(result);
         }
 
     }
@@ -55,8 +61,10 @@ public class TicTacToe {
         char symbol = ' ';
         if (user.equals("Player")){
             symbol = 'X';
+            playerPositions.add(position);
         } else if (user.equals("CPU")){
             symbol = 'O';
+            computerPositions.add(position);
         }
         switch (position) {
             case 1 -> gameBoard[0][0] = symbol;
@@ -70,6 +78,43 @@ public class TicTacToe {
             case 9 -> gameBoard[4][4] = symbol;
             default -> throw new IllegalStateException("Unexpected value: " + position);
         }
+    }
+
+    public static String checkWinner(){
+
+        List topRow = Arrays.asList(1, 2, 3);
+        List middleRow = Arrays.asList(4, 5, 6);
+        List bottomeRow = Arrays.asList(7, 8, 9);
+
+        List leftColumn = Arrays.asList(1, 4, 7);
+        List middleColumn = Arrays.asList(2, 5, 8);
+        List rightColumn = Arrays.asList(3, 6, 9);
+
+        List leftToRightCross = Arrays.asList(1, 5, 9);
+        List rightToLeftCross = Arrays.asList(7, 5, 3);
+
+        List<List> winningConditions = new ArrayList<List>();
+        winningConditions.add(topRow);
+        winningConditions.add(middleRow);
+        winningConditions.add(bottomeRow);
+        winningConditions.add(leftColumn);
+        winningConditions.add(middleColumn);
+        winningConditions.add(rightColumn);
+        winningConditions.add(leftToRightCross);
+        winningConditions.add(rightToLeftCross);
+
+        for (List chosenList: winningConditions){
+            if (playerPositions.containsAll(chosenList)){
+                return "You have won!";
+            }
+            else if (computerPositions.containsAll(chosenList)){
+                return "CPU wins!";
+            }
+            else if(playerPositions.size() + computerPositions.size() == 9){
+                return "Draw!";
+            }
+        }
+        return "";
     }
 
 
