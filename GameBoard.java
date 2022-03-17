@@ -9,6 +9,7 @@ public class GameBoard {
 
     public static void printGameBoard(){
 
+        System.out.println();
         // print out each array in the game-board
         for (char[] row: gameBoard){
             // print out each symbol
