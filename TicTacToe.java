@@ -14,22 +14,53 @@ public class TicTacToe {
 
 
     }
+
     public static void playAgainstComputer(){
-        // Show the user the GameBoard
-        GameBoard.printGameBoard();
 
-        // Start the Game
-        while(true){
-            int playerPos = Player.getPlayerPosition();
-            Player.placePlayerSymbol(playerPos);
-            Winner.checkWinner();
+        while(true) {
+            // Ask the user what symbol they would like to be
+            System.out.println("Would you like to be:\n" +
+                    "1. O's\n" +
+                    "2. X's\n");
+            String choice = consoleInput.nextLine();
 
-            int computerPos = Computer.getComputerPosition();
-            Computer.placeComputerPosition(computerPos);
-            Winner.checkWinner();
+            if (choice.equals("1")) {
 
+                // Start the Game
+                while (true) {
+                    int playerPos = Player.getPlayerPosition();
+                    Player.placePlayerSymbol(playerPos, 'O');
+                    Winner.checkWinner();
+
+                    int computerPos = Computer.getComputerPosition();
+                    Computer.placeComputerPosition(computerPos, 'X');
+                    Winner.checkWinner();
+
+                    GameBoard.printGameBoard();
+                }
+            } else if (choice.equals("2")) {
+                // Start the Game
+                while (true) {
+                    int playerPos = Player.getPlayerPosition();
+                    Player.placePlayerSymbol(playerPos, 'X');
+                    Winner.checkWinner();
+
+                    int computerPos = Computer.getComputerPosition();
+                    Computer.placeComputerPosition(computerPos, 'O');
+                    Winner.checkWinner();
+
+                    GameBoard.printGameBoard();
+                }
+            } else {
+                System.out.println("You have not inputted a correct symbol please try again");
+            }
+
+
+            // Show the user the GameBoard
             GameBoard.printGameBoard();
         }
+
+
     }
 
     public static void gameChoice(){

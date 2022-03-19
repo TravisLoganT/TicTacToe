@@ -34,9 +34,8 @@ public class Computer {
         return computerPosition;
     }
 
-    public static void placeComputerPosition(int computerPosition){
+    public static void placeComputerPosition(int computerPosition, char symbol){
         // Place the position to the GameBoard
-        char symbol = 'O';
         TicTacToe.computerPositions.add(computerPosition);
         GameBoard.symbolPlacement(computerPosition, symbol);
     }

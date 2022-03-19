@@ -13,10 +13,9 @@ public class Player {
         return playerPosition;
     }
 
-    public static void placePlayerSymbol(int playerPosition){
+    public static void placePlayerSymbol(int playerPosition, char symbol){
 
         // Add the players choice to the GameBoard
-        char symbol = 'X';
         TicTacToe.playerPositions.add(playerPosition);
         GameBoard.symbolPlacement(playerPosition, symbol);
     }
