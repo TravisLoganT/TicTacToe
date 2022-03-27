@@ -4,13 +4,14 @@ import java.util.List;
 
 public class Winner {
 
+    public static ArrayList<List> winningConditions = new ArrayList<>();
+
     public static void exit(){
         // close the application
         System.exit(0);
     }
 
-    public static void checkWinner(){
-
+    public static void winningConditions(){
         // List all the row possibilities for a win
         List<Integer> topRow = Arrays.asList(1, 2, 3);
         List<Integer> middleRow = Arrays.asList(4, 5, 6);
@@ -26,7 +27,6 @@ public class Winner {
         List<Integer> rightToLeftCross = Arrays.asList(7, 5, 3);
 
         // Add all the winning combinations to a List
-        ArrayList<List> winningConditions = new ArrayList<>();
         winningConditions.add(topRow);
         winningConditions.add(middleRow);
         winningConditions.add(bottomRow);
@@ -36,6 +36,29 @@ public class Winner {
         winningConditions.add(leftToRightCross);
         winningConditions.add(rightToLeftCross);
 
+    }
+
+    public static void checkWinnerPlayerVSPlayer(){
+        winningConditions();
+        for (List chosenList: winningConditions) {
+
+            if (TicTacToe.playerPositions.containsAll(chosenList)) {
+                System.out.println("Player 1 has won");
+                exit();
+            }
+            else if (TicTacToe.player2Positions.containsAll(chosenList)){
+                System.out.println("Player 2 has won");
+                exit();
+            }
+            else if(TicTacToe.playerPositions.size() + TicTacToe.player2Positions.size() == 9){
+                System.out.println("Draw");
+                exit();
+            }
+        }
+    }
+
+    public static void checkWinnerPlayerVSComputer(){
+        winningConditions();
         // If a winning combination is made by the user or computer, display who won. Or display a draw.
         for (List chosenList: winningConditions){
             if (TicTacToe.playerPositions.containsAll(chosenList)){
